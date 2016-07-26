@@ -86,7 +86,37 @@
  * );
  * @endcode
  */
- $databases = array();
+ 
+$connectstr_dbhost = '';
+$connectstr_fulldbhost = '';
+$connectstr_dbname = '';
+$connectstr_dbusername = '';
+$connectstr_dbpassword = '';
+
+foreach ($_SERVER as $key => $value) {
+    if (strpos($key, "MYSQLCONNSTR_") !== 0) {
+        continue;
+    }
+    
+    $connectstr_dbfullhost = preg_replace("/^.*Data Source=(.+?);.*$/", "\\1", $value);
+    $pos = strpos ($connectstr_dbfullhost,":");
+    $connectstr_dbhost= substr($connectstr_dbfullhost,0. $pos);
+    $port = substr($connectstr_dbfullhost,$pos+1, strlen($connectstr_dbfullhost));
+    $connectstr_dbname = preg_replace("/^.*Database=(.+?);.*$/", "\\1", $value);
+    $connectstr_dbusername = preg_replace("/^.*User Id=(.+?);.*$/", "\\1", $value);
+    $connectstr_dbpassword = preg_replace("/^.*Password=(.+?)$/", "\\1", $value);
+}
+
+$databases['default']['default'] = array (
+  'database' => $connectstr_dbname ,
+  'username' => $connectstr_dbusername,
+  'password' => $connectstr_dbpassword ,
+  'host' => $connectstr_dbhost;
+  'port' => $port,
+  'driver' => 'mysql',
+  'prefix' => '',
+  'collation' => 'utf8mb4_general_ci',
+);
 
 /**
  * Customizing database settings.
