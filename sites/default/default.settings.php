@@ -100,7 +100,7 @@ foreach ($_SERVER as $key => $value) {
     
     $connectstr_dbfullhost = preg_replace("/^.*Data Source=(.+?);.*$/", "\\1", $value);
     $pos = strpos ($connectstr_dbfullhost,":");
-    $connectstr_dbhost= substr($connectstr_dbfullhost,0. $pos);
+    $connectstr_dbhost= substr($connectstr_dbfullhost,0, $pos);
     $port = substr($connectstr_dbfullhost,$pos+1, strlen($connectstr_dbfullhost));
     $connectstr_dbname = preg_replace("/^.*Database=(.+?);.*$/", "\\1", $value);
     $connectstr_dbusername = preg_replace("/^.*User Id=(.+?);.*$/", "\\1", $value);
